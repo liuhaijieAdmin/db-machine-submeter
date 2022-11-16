@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhuzi.dbMachineSubmeter.dao.MonthBillsMapper" >
+  <resultMap id="BaseResultMap" type="com.zhuzi.dbMachineSubmeter.entity.MonthBills" >
+    <constructor >
+      <idArg column="month_bills_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="serial_number" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="pay_money" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="machine_serial_no" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="bill_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="bill_comment" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+
+  <resultMap id="ResultMapMonthBills" type="com.zhuzi.dbMachineSubmeter.entity.MonthBills" >
+    <constructor >
+      <idArg column="month_bills_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="serial_number" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="pay_money" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="machine_serial_no" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="bill_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="bill_comment" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="bills_info" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    month_bills_id, serial_number, bills_info, pay_money, machine_serial_no, bill_date, bill_comment
+  </sql>
+
+  <select id="selectBySerialNumber" resultMap="ResultMapMonthBills" parameterType="com.zhuzi.dbMachineSubmeter.entity.MonthBills" >
+    select 
+    <include refid="Base_Column_List" />
+    from ${targetTable}
+    where serial_number = #{serialNumber,jdbcType=VARCHAR}
+  </select>
+
+  <select id="rangeQueryByDate" resultMap="ResultMapMonthBills" parameterType="java.lang.String" >
+    ${sql}
+  </select>
+
+  <delete id="deleteBySerialNumber" parameterType="com.zhuzi.dbMachineSubmeter.entity.MonthBills" >
+    delete from ${targetTable}
+    where serial_number = #{serialNumber,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.zhuzi.dbMachineSubmeter.entity.MonthBills">
+    insert into ${targetTable}
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="monthBillsId != null" >
+        month_bills_id,
+      </if>
+      <if test="serialNumber != null" >
+        serial_number,
+      </if>
+      <if test="payMoney != null" >
+        pay_money,
+      </if>
+      <if test="machineSerialNo != null" >
+        machine_serial_no,
+      </if>
+      <if test="billDate != null" >
+        bill_date,
+      </if>
+      <if test="billComment != null" >
+        bill_comment,
+      </if>
+      <if test="billsInfo != null" >
+        bills_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="monthBillsId != null" >
+        #{monthBillsId,jdbcType=INTEGER},
+      </if>
+      <if test="serialNumber != null" >
+        #{serialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="payMoney != null" >
+        #{payMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="machineSerialNo != null" >
+        #{machineSerialNo,jdbcType=VARCHAR},
+      </if>
+      <if test="billDate != null" >
+        #{billDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billComment != null" >
+        #{billComment,jdbcType=VARCHAR},
+      </if>
+      <if test="billsInfo != null" >
+        #{billsInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateBySerialNumber" parameterType="com.zhuzi.dbMachineSubmeter.entity.MonthBills" >
+    update ${targetTable}
+    <set >
+      <if test="serialNumber != null" >
+        serial_number = #{serialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="payMoney != null" >
+        pay_money = #{payMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="machineSerialNo != null" >
+        machine_serial_no = #{machineSerialNo,jdbcType=VARCHAR},
+      </if>
+      <if test="billDate != null" >
+        bill_date = #{billDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billComment != null" >
+        bill_comment = #{billComment,jdbcType=VARCHAR},
+      </if>
+      <if test="billsInfo != null" >
+        bills_info = #{billsInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where serial_number = #{serialNumber,jdbcType=VARCHAR}
+  </update>
+</mapper>
